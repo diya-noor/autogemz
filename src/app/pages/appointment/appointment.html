@@ -1,0 +1,97 @@
+<!-- content begin -->
+<div class="no-bottom no-top mt-5" id="content">
+  <div id="top"></div>
+
+  <section class="jarallax">
+    <img src="images/background/1.webp" class="jarallax-img" alt="">
+    <div class="container relative z-2">
+      <div class="spacer-single xs-hide"></div>
+      <div class="row g-4 justify-content-center align-items-center">
+        <div class="col-lg-6">
+          <div class="relative">
+
+            <!-- Success message -->
+            <div *ngIf="submitted" id="success_message_col" class="success text-light p-40 h-100">
+              <h3>Thank You For Your Order</h3>
+              <p>We have received your request and will be processing it shortly. Click button below if you want to make another order.</p>
+              <button class="btn-main" (click)="reOrder()">Re-order</button>
+            </div>
+
+            <!-- Booking form -->
+            <form *ngIf="!submitted" (ngSubmit)="onSubmit()" #bookingForm="ngForm"
+              class="relative z1000 bg-dark text-light rounded-1 p-40 mt-5">
+              <div class="row g-3 mt-5">
+                <div class="col-lg-12">
+                  <h2 class="mb-3"><i class="fa fa-envelope-o id-color me-2"></i> Make Appointment</h2>
+                  <p>Dirty car bringing down your shine? Get it detailed today! Book your appointment now and drive clean with confidence and style.</p>
+                  <div class="relative">
+                    <select name="service" class="form-control" [(ngModel)]="formData.service" required>
+                      <option disabled value="">Select Service</option>
+                      <option value="Car Import">Car Import</option>
+                      <option value="Car Inspection">Car Inspection</option>
+                      <option value="Car Documentation">Car Documentation</option>
+                      <option value="Investment Opportunity">Investment Opportunity</option>
+                    </select>
+                    <i class="absolute top-0 end-0 id-color pt-3 pe-3 icofont-simple-down"></i>
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="relative">
+                    <i class="absolute top-0 end-0 id-color pt-3 pe-3 icofont-calendar"></i>
+                    <input class="form-control" name="date" type="date" [(ngModel)]="formData.date" required>
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="relative">
+                    <select name="time" class="form-control" [(ngModel)]="formData.time" required>
+                      <option disabled value="">Select Time</option>
+                      <option value="10:00">10:00</option>
+                      <option value="11:00">11:00</option>
+                      <option value="12:00">12:00</option>
+                      <option value="13:00">13:00</option>
+                      <option value="14:00">14:00</option>
+                      <option value="15:00">15:00</option>
+                      <option value="16:00">16:00</option>
+                      <option value="17:00">17:00</option>
+                      <option value="18:00">18:00</option>
+                      <option value="19:00">19:00</option>
+                      <option value="20:00">20:00</option>
+                    </select>
+                    <i class="absolute top-0 end-0 id-color pt-3 pe-3 icofont-simple-down"></i>
+                  </div>
+                </div>
+
+                <div class="col-lg-4">
+                  <input type="text" name="name" placeholder="Name" class="form-control" [(ngModel)]="formData.name" required>
+                </div>
+                <div class="col-lg-4">
+                  <input type="email" name="email" placeholder="Email" class="form-control" [(ngModel)]="formData.email" required>
+                </div>
+                <div class="col-lg-4">
+                  <input type="text" name="phone" placeholder="Phone" class="form-control" [(ngModel)]="formData.phone" required>
+                </div>
+                <div class="col-lg-12">
+                  <textarea name="message" class="form-control" placeholder="Message" [(ngModel)]="formData.message"></textarea>
+                </div>
+                <div class="col-lg-12">
+                  <div id="submit">
+                    <input type="submit" value="Send Appointment" class="btn-main" [disabled]="submitting">
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="errorMessage" class="error mt-3">
+                Sorry there was an error sending your form.
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sw-overlay"></div>
+  </section>
+</div>
+<!-- content end -->

@@ -1,0 +1,250 @@
+<!-- content begin -->
+<div class="no-bottom no-top" id="content">
+  <div id="top"></div>
+
+  <!-- Breadcrumb -->
+  <section class="bg-dark text-light relative jarallax">
+    <div class="de-gradient-edge-top"></div>
+    <img src="images/background/breadcrumb.png" class="jarallax-img" alt="">
+    <div class="container relative z-2">
+      <div class="row gy-4 gx-5 justify-content-center">
+        <div class="col-lg-12 text-center">
+          <div class="spacer-double sm-hide"></div>
+          <h1 class="mb-3 wow fadeInUp" data-wow-delay=".2s">Inventory</h1>
+          <div class="border-bottom mb-3"></div>
+          <ul class="crumb wow fadeInUp">
+            <li><a routerLink="/">Home</a></li>
+            <li class="active">Inventory</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="sw-overlay"></div>
+  </section>
+
+  <!-- Filter Bar -->
+  <section style="padding: 30px 0 0">
+    <div class="container">
+
+      <!-- Tabs -->
+      <div class="inv-filter-tabs">
+        <button class="inv-tab-btn" [class.active]="activeTab === 'all'" (click)="setTab('all')">All</button>
+        <button class="inv-tab-btn" [class.active]="activeTab === 'new'" (click)="setTab('new')">
+          <i class="inv-dot inv-dot-new"></i> New
+        </button>
+        <button class="inv-tab-btn" [class.active]="activeTab === 'old'" (click)="setTab('old')">
+          <i class="inv-dot inv-dot-sold"></i> Sold
+        </button>
+        <button class="inv-tab-btn" [class.active]="activeTab === 'brand'" (click)="setTab('brand')">Brand</button>
+        <button class="inv-tab-btn" [class.active]="activeTab === 'model'" (click)="setTab('model')">Model Year</button>
+      </div>
+
+      <!-- Brand filter chips -->
+      <div *ngIf="activeTab === 'brand'" class="inv-filter-chips mt-3">
+        <button *ngFor="let brand of brands"
+                class="inv-chip"
+                [class.active]="selectedBrand === brand"
+                (click)="selectBrand(brand)">
+          {{brand}}
+        </button>
+      </div>
+
+      <!-- Model year filter chips -->
+      <div *ngIf="activeTab === 'model'" class="inv-filter-chips mt-3">
+        <button *ngFor="let year of modelYears"
+                class="inv-chip"
+                [class.active]="selectedModelYear === year"
+                (click)="selectYear(year)">
+          {{year}}
+        </button>
+      </div>
+
+      <!-- Results count -->
+      <div class="inv-results-meta mt-3">
+        <span>
+          Showing <strong>{{visibleCars.length}}</strong> of <strong>{{filteredCars.length}}</strong> vehicles
+          <span *ngIf="selectedBrand"> &mdash; <span class="id-color">{{selectedBrand}}</span></span>
+          <span *ngIf="selectedModelYear"> &mdash; <span class="id-color">{{selectedModelYear}}</span></span>
+        </span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Cars Grid -->
+  <section>
+    <div class="container">
+      <div class="row g-4">
+
+        <!-- No results message -->
+        <div *ngIf="filteredCars.length === 0" class="col-12 text-center py-5">
+          <h4 class="op-5">No vehicles found for this filter.</h4>
+        </div>
+
+        <ng-container *ngFor="let car of visibleCars">
+
+          <!-- Car Card -->
+          <div class="col-xl-4 col-lg-4 col-md-6">
+            <div class="inv-card">
+
+              <!-- Image area -->
+              <div class="inv-card__img-wrap">
+                <div class="ribbon" [ngClass]="car.status === 'new' ? 'ribbon-new' : 'ribbon-sold'">
+                  {{car.status === 'new' ? 'NEW' : 'SOLD'}}
+                </div>
+                <a href="#" data-bs-toggle="modal" [attr.data-bs-target]="'#modalImages_' + car.id"
+                   class="inv-card__img-link">
+                  <img class="inv-card__img inv-card__img--main" [src]="car.mainImage" [alt]="car.name">
+                  <img class="inv-card__img inv-card__img--hover" [src]="car.hoverImage" [alt]="car.name">
+                  <!-- hover overlay -->
+                  <div class="inv-card__overlay">
+                    <span class="inv-card__overlay-icon"><i class="fa fa-expand"></i></span>
+                    <span class="inv-card__overlay-text">View Gallery</span>
+                  </div>
+                </a>
+              </div>
+
+              <!-- Card body -->
+              <div class="inv-card__body">
+                <div class="inv-card__meta">
+                  <span class="inv-brand-tag">{{car.brand}}</span>
+                  <span class="inv-year-tag">{{car.modelYear}}</span>
+                </div>
+                <h3 class="inv-card__name">{{car.name}}</h3>
+                <div class="inv-card__specs-preview">
+                  <span *ngFor="let spec of car.specs.slice(0,3); let i = index"
+                        class="inv-card__spec-item">
+                    <i class="inv-card__spec-dot"></i>{{spec}}
+                  </span>
+                </div>
+                <div class="inv-card__actions">
+                  <a href="#" data-bs-toggle="modal" [attr.data-bs-target]="'#modalImages_' + car.id"
+                     class="inv-card__btn inv-card__btn--gallery">
+                    <i class="fa fa-images me-1"></i> Photos
+                  </a>
+                  <button data-bs-toggle="modal" [attr.data-bs-target]="'#modalDetails_' + car.id"
+                          class="inv-card__btn inv-card__btn--details">
+                    <i class="fa fa-info-circle me-1"></i> Details
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Images Modal -->
+          <div class="modal fade inv-images-modal" [id]="'modalImages_' + car.id" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">{{car.name}} — Images</h5>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                  <div [id]="'carousel_' + car.id" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                      <div *ngFor="let img of car.images; let i = index"
+                           class="carousel-item" [class.active]="i === 0">
+                        <img [src]="img" class="d-block w-100" [alt]="car.name">
+                      </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button"
+                            [attr.data-bs-target]="'#carousel_' + car.id" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button"
+                            [attr.data-bs-target]="'#carousel_' + car.id" data-bs-slide="next">
+                      <span class="carousel-control-next-icon"></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Details Modal -->
+          <div class="modal fade" [id]="'modalDetails_' + car.id" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+              <div class="modal-content inv-detail-modal">
+
+                <!-- Modal header with car image background -->
+                <div class="inv-detail-modal__header"
+                     [style.background-image]="'url(' + car.mainImage + ')'">
+                  <div class="inv-detail-modal__header-overlay">
+                    <button type="button" class="btn-close btn-close-white inv-detail-modal__close"
+                            data-bs-dismiss="modal"></button>
+                    <div class="inv-detail-modal__header-content">
+                      <div class="inv-detail-modal__badges mb-2">
+                        <span class="inv-detail-badge"
+                              [ngClass]="car.status === 'new' ? 'inv-detail-badge--new' : 'inv-detail-badge--sold'">
+                          {{car.status === 'new' ? 'NEW' : 'SOLD'}}
+                        </span>
+                        <span class="inv-detail-badge inv-detail-badge--brand">{{car.brand}}</span>
+                        <span class="inv-detail-badge inv-detail-badge--year">{{car.modelYear}}</span>
+                      </div>
+                      <h3 class="inv-detail-modal__car-name">{{car.name}}</h3>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body inv-detail-modal__body">
+                  <div class="row g-4">
+
+                    <!-- Specifications column -->
+                    <div class="col-md-5">
+                      <h6 class="inv-detail-section-title">
+                        <i class="fa fa-clipboard-list me-2 id-color"></i>Specifications
+                      </h6>
+                      <ul class="inv-spec-list">
+                        <li *ngFor="let spec of car.specs">
+                          <i class="fa fa-check-circle inv-spec-icon"></i>
+                          <span>{{spec}}</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <!-- Features column -->
+                    <div class="col-md-7">
+                      <h6 class="inv-detail-section-title">
+                        <i class="fa fa-star me-2 id-color"></i>Features
+                      </h6>
+                      <div class="inv-feature-grid">
+                        <span *ngFor="let feat of car.features" class="inv-feature-pill">
+                          {{feat}}
+                        </span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="inv-detail-modal__footer">
+                  <button data-bs-dismiss="modal" class="inv-detail-footer-btn inv-detail-footer-btn--close">
+                    Close
+                  </button>
+                  <a href="tel:+923341111167" class="inv-detail-footer-btn inv-detail-footer-btn--cta">
+                    <i class="fa fa-phone me-2"></i>Enquire Now
+                  </a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </ng-container>
+
+        <!-- Load More Button -->
+        <div *ngIf="hasMore" class="col-12 text-center mt-2">
+          <button class="btn-main" (click)="loadAll()">
+            <span>Load All {{filteredCars.length}} Cars</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</div>
+<!-- content end -->

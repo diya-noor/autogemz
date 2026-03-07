@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Angular component host elements — render as block to avoid layout gaps */
+app-root,
+app-header,
+app-footer,
+app-extra-wrap,
+app-home,
+app-about,
+app-contact,
+app-appointment,
+app-inventory,
+app-car-import,
+app-car-inspection,
+app-car-documentation,
+app-investment-opportunity {
+  display: block;
+}
+
+/* Match body/html background to footer so any sub-pixel gap is invisible */
+html,
+body {
+  background: var(--bg-dark-2) !important;
+}
+
+/* Prevent bottom padding/margin on the last section of every page */
+#content section:last-child,
+#content section:last-child .container,
+#content section:last-child .row:last-child {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Footer sits flush — no extra margin */
+app-footer footer {
+  margin: 0;
+}
