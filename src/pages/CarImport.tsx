@@ -53,6 +53,31 @@ export default function CarImport() {
         </div>
       </section>
 
+      <section className="bg-dark-2 jarallax text-light">
+        <img src="images/background/importation.png" className="jarallax-img" alt="" />
+        <div className="sw-overlay"></div>
+        <div className="container relative z-2">
+          <div className="row g-4 justify-content-center">
+            <div className="col-lg-12 text-center">
+              <div className="subtitle">Steps</div>
+              <h2>How It Works</h2>
+            </div>
+            {[
+              { icon: 'fa-search', title: 'Vehicle Sourcing', text: 'We identify and source your dream luxury car from trusted international markets and premium dealers worldwide.', arrow: true },
+              { icon: 'fa-ship', title: 'Shipping & Logistics', text: 'Our team handles all shipping arrangements, cargo management, and international logistics to ensure safe transit.', arrow: true },
+              { icon: 'fa-file-alt', title: 'Import & Clearance', text: 'We manage all import documentation, customs clearance, and compliance requirements on your behalf.', arrow: true },
+              { icon: 'fa-home', title: 'Doorstep Delivery', text: 'Your luxury vehicle is delivered directly to your doorstep, fully inspected and ready to drive.', arrow: false },
+            ].map((step, i) => (
+              <div key={i} className={`col-6 col-md-3 de-step${step.arrow ? ' de-step-arrow' : ''}`}>
+                <div className="de-step-icon bg-color"><i className={`fas ${step.icon} fa-2x`}></i></div>
+                <h4 className="fw-bold">{step.title}</h4>
+                <p>{step.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="bg-color text-light pt-60 pb-50">
         <div className="container">
           <div className="row g-4">

@@ -4,10 +4,33 @@ declare const $: any;
 declare const WOW: any;
 declare const jarallax: any;
 
+// Wait for jQuery to be available (plugins.js is deferred)
+function waitForJQuery(cb: () => void, tries = 0) {
+  if (typeof $ !== 'undefined') { cb(); return; }
+  if (tries > 50) return; // give up after 5s
+  setTimeout(() => waitForJQuery(cb, tries + 1), 100);
+}
+
 export function usePluginInit() {
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (typeof $ === 'undefined') return;
+    waitForJQuery(() => {
+      // Preloader fade-out
+      $('#de-loader').delay(500).fadeOut('slow');
+
+      // Mobile menu toggle (#menu-btn)
+      $('#menu-btn').off('click.menuToggle').on('click.menuToggle', function () {
+        $('header').toggleClass('menu-open');
+      });
+
+      // Back to top
+      $('#back-to-top').off('click.btt').on('click.btt', function (e: any) {
+        e.preventDefault();
+        $('html, body').animate({ scrollTop: 0 }, 400);
+      });
+      $(window).off('scroll.btt').on('scroll.btt', function () {
+        if ($(window).scrollTop()! > 300) $('#back-to-top').addClass('show');
+        else $('#back-to-top').removeClass('show');
+      });
 
       // WOW animations
       if (typeof WOW !== 'undefined') {
@@ -56,6 +79,7 @@ export function usePluginInit() {
         if (scrollTop > 50) $('header').addClass('sticky');
         else $('header').removeClass('sticky');
       });
+      $(window).trigger('scroll');
 
       // Background image via data-bgimage
       $('[data-bgimage]').each(function (this: HTMLElement) {
@@ -82,15 +106,14 @@ export function usePluginInit() {
         const el = $(this);
         const to = parseFloat(el.attr('data-to') || '0');
         const speed = parseInt(el.attr('data-speed') || '2000');
-        ({ Counter: 0 } as any);
         $({ Counter: 0 }).animate({ Counter: to }, {
           duration: speed, easing: 'swing',
           step: function (now: number) { el.text(Math.ceil(now)); },
           complete: function () { el.text(to); },
         });
       });
-    }, 100);
+    });
 
-    return () => clearTimeout(timer);
+    return () => {};
   }, []);
 }

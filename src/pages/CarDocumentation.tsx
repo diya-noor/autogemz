@@ -52,6 +52,31 @@ export default function CarDocumentation() {
         </div>
       </section>
 
+      <section className="bg-dark-2 jarallax text-light">
+        <img src="images/background/documentation.png" className="jarallax-img" alt="" />
+        <div className="sw-overlay"></div>
+        <div className="container relative z-2">
+          <div className="row g-4 justify-content-center">
+            <div className="col-lg-12 text-center">
+              <div className="subtitle">Steps</div>
+              <h2>How It Works</h2>
+            </div>
+            {[
+              { icon: 'fa-clipboard-list', title: 'Document Collection', text: 'We gather all official vehicle records, ownership history, and import papers from relevant authorities.', arrow: true },
+              { icon: 'fa-search', title: 'Thorough Verification', text: 'Our specialists rigorously verify every document for authenticity, accuracy, and legal compliance.', arrow: true },
+              { icon: 'fa-shield-alt', title: 'Guaranty Issuance', text: 'Once verified, we issue our official documentation guaranty, giving you complete confidence in the paperwork.', arrow: true },
+              { icon: 'fa-handshake', title: 'Transparent Handover', text: 'All verified documents are handed over to you in full transparency, ensuring a smooth and secure transaction.', arrow: false },
+            ].map((step, i) => (
+              <div key={i} className={`col-6 col-md-3 de-step${step.arrow ? ' de-step-arrow' : ''}`}>
+                <div className="de-step-icon bg-color"><i className={`fas ${step.icon} fa-2x`}></i></div>
+                <h4 className="fw-bold">{step.title}</h4>
+                <p>{step.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="bg-color text-light pt-60 pb-50">
         <div className="container">
           <div className="row g-4">

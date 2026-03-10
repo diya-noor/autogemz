@@ -52,6 +52,31 @@ export default function InvestmentOpportunity() {
         </div>
       </section>
 
+      <section className="bg-dark-2 jarallax text-light">
+        <img src="images/background/investment.png" className="jarallax-img" alt="" />
+        <div className="sw-overlay"></div>
+        <div className="container relative z-2">
+          <div className="row g-4 justify-content-center">
+            <div className="col-lg-12 text-center">
+              <div className="subtitle">Steps</div>
+              <h2>How It Works</h2>
+            </div>
+            {[
+              { icon: 'fa-phone', title: 'Initial Consultation', text: 'Contact our investment team to discuss your financial goals and explore the premium vehicle investment options available.', arrow: true },
+              { icon: 'fa-car', title: 'Vehicle Selection', text: 'We identify high-value luxury vehicles with strong appreciation potential that align with your investment strategy.', arrow: true },
+              { icon: 'fa-file-signature', title: 'Agreement & Investment', text: 'A transparent investment agreement is signed and your funds are allocated to the selected luxury vehicle portfolio.', arrow: true },
+              { icon: 'fa-chart-line', title: 'Returns & Profits', text: 'Sit back and enjoy premium monthly returns of up to 24% as your investment grows with AutoGemz\'s expert management.', arrow: false },
+            ].map((step, i) => (
+              <div key={i} className={`col-6 col-md-3 de-step${step.arrow ? ' de-step-arrow' : ''}`}>
+                <div className="de-step-icon bg-color"><i className={`fas ${step.icon} fa-2x`}></i></div>
+                <h4 className="fw-bold">{step.title}</h4>
+                <p>{step.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="bg-color text-light pt-60 pb-50">
         <div className="container">
           <div className="row g-4">

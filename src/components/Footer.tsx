@@ -25,6 +25,7 @@ export default function Footer() {
                     <ul>
                       <li><Link to="/">Home</Link></li>
                       <li><Link to="/about">About Us</Link></li>
+                      <li><Link to="/blog">Blog</Link></li>
                       <li><Link to="/contact">Contact</Link></li>
                     </ul>
                   </div>
@@ -60,6 +61,18 @@ export default function Footer() {
                   <i className="icofont-envelope me-2 id-color"></i>Email Us
                 </div>
                 <a href="mailto:info@autogemz.com">info@autogemz.com</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="subfooter">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-6">
+                <span className="copy">© {new Date().getFullYear()} AutoGemz. All Rights Reserved.</span>
+              </div>
+              <div className="col-md-6 text-lg-end">
+                <Link to="/blog">Blog</Link>
               </div>
             </div>
           </div>

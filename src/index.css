@@ -1,5 +1,4 @@
-@import "tailwindcss" layer(utilities);
-
+/* Theme CSS is loaded via index.html — no Tailwind preflight needed */
 /* Override Vite defaults — theme CSS handles base styles */
 :root {
   font-synthesis: none;
@@ -16,7 +15,7 @@ body {
 
 html,
 body {
-  background: var(--bg-dark-2) !important;
+  background: var(--bg-dark-1) !important;
 }
 
 /* Remove gap below last section on every page */

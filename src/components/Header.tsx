@@ -85,6 +85,9 @@ export default function Header() {
                       <Link className={`menu-item${isActive('/inventory') ? ' active' : ''}`} to="/inventory">Inventory</Link>
                     </li>
                     <li>
+                      <Link className={`menu-item${isActive('/blog') ? ' active' : ''}`} to="/blog">Blog</Link>
+                    </li>
+                    <li>
                       <Link className={`menu-item${isActive('/about') ? ' active' : ''}`} to="/about">About Us</Link>
                     </li>
                     <li>

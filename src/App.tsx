@@ -12,6 +12,8 @@ import CarImport from './pages/CarImport';
 import CarInspection from './pages/CarInspection';
 import CarDocumentation from './pages/CarDocumentation';
 import InvestmentOpportunity from './pages/InvestmentOpportunity';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -41,6 +43,8 @@ function Layout() {
           <Route path="/car-inspection" element={<CarInspection />} />
           <Route path="/car-documentation" element={<CarDocumentation />} />
           <Route path="/investment-opportunity" element={<InvestmentOpportunity />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
         </Routes>
 
         <Footer />

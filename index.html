@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AutoGemz - Cruise Towards Excellence</title>
 
-    <!-- Theme CSS (same as Angular's styles array in angular.json) -->
+    <!-- Theme CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/plugins.css" />
     <link rel="stylesheet" href="/css/swiper.css" />
@@ -15,12 +15,12 @@
     <link rel="stylesheet" href="/css/custom-swiper-1.css" />
     <link rel="stylesheet" href="/css/datepicker.css" />
   </head>
-  <body>
+  <body class="dark-scheme">
     <div id="root"></div>
 
-    <!-- Theme JS (same as Angular's scripts array in angular.json) -->
-    <script src="/js/plugins.js"></script>
-    <script src="/js/designesia.js"></script>
+    <!-- Theme JS — deferred so 778KB doesn't block render -->
+    <script src="/js/plugins.js" defer></script>
+    <script src="/js/designesia.js" defer></script>
 
     <script type="module" src="/src/main.tsx"></script>
   </body>
