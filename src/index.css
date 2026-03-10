@@ -1,0 +1,32 @@
+@import "tailwindcss" layer(utilities);
+
+/* Override Vite defaults — theme CSS handles base styles */
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  display: block;
+  min-width: 320px;
+}
+
+html,
+body {
+  background: var(--bg-dark-2) !important;
+}
+
+/* Remove gap below last section on every page */
+#content section:last-child,
+#content section:last-child .container,
+#content section:last-child .row:last-child {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+footer {
+  margin: 0;
+}
