@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { usePluginInit } from '../hooks/usePluginInit';
 import './inventory.css';
@@ -40,15 +40,6 @@ const cars: Car[] = [
 
 const PAGE_SIZE = 10;
 
-function openModal(id: string) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const bs = (window as any).bootstrap;
-  if (bs) {
-    bs.Modal.getOrCreateInstance(el).show();
-  }
-}
-
 export default function Inventory() {
   usePluginInit();
 
@@ -56,6 +47,24 @@ export default function Inventory() {
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedModelYear, setSelectedModelYear] = useState<number | null>(null);
   const [showAll, setShowAll] = useState(false);
+  const [galleryCarId, setGalleryCarId] = useState<string | null>(null);
+  const [gallerySlide, setGallerySlide] = useState(0);
+  const [detailCarId, setDetailCarId] = useState<string | null>(null);
+
+  const galleryCar = galleryCarId ? cars.find(c => c.id === galleryCarId) : null;
+  const detailCar = detailCarId ? cars.find(c => c.id === detailCarId) : null;
+
+  // Lock body scroll when modal open
+  useEffect(() => {
+    const open = !!(galleryCarId || detailCarId);
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [galleryCarId, detailCarId]);
+
+  function openGallery(id: string) { setGalleryCarId(id); setGallerySlide(0); }
+  function closeGallery() { setGalleryCarId(null); }
+  function openDetail(id: string) { setDetailCarId(id); }
+  function closeDetail() { setDetailCarId(null); }
 
   const brands = [...new Set(cars.map(c => c.brand))].sort();
   const modelYears = [...new Set(cars.map(c => c.modelYear))].sort((a, b) => b - a);
@@ -196,7 +205,7 @@ export default function Inventory() {
                   <div className="inv-card__img-wrap">
                     {car.status === 'new' && <div className="inv-card__badge inv-card__badge--new">NEW</div>}
                     {car.status === 'sold' && <div className="inv-card__badge inv-card__badge--sold">SOLD</div>}
-                    <a className="inv-card__img-link" onClick={() => openModal(`modalImages_${car.id}`)} style={{ cursor: 'pointer' }}>
+                    <a className="inv-card__img-link" onClick={() => openGallery(car.id)} style={{ cursor: 'pointer' }}>
                       <img src={car.mainImage} alt={car.name} className="inv-card__img inv-card__img--main" />
                       <img src={car.hoverImage} alt={car.name} className="inv-card__img inv-card__img--hover" />
                     </a>
@@ -216,96 +225,16 @@ export default function Inventory() {
                       {car.specs.slice(0, 3).map((s, i) => <li key={i}>{s}</li>)}
                     </ul>
                     <div className="inv-card__actions">
-                      <button className="inv-btn inv-btn--photos" onClick={() => openModal(`modalImages_${car.id}`)}>
+                      <button className="inv-btn inv-btn--photos" onClick={() => openGallery(car.id)}>
                         <i className="fa fa-camera me-1"></i> Photos
                       </button>
-                      <button className="inv-btn inv-btn--details" onClick={() => openModal(`modalDetails_${car.id}`)}>
+                      <button className="inv-btn inv-btn--details" onClick={() => openDetail(car.id)}>
                         <i className="fa fa-info-circle me-1"></i> Details
                       </button>
                     </div>
                   </div>
                 </div>
 
-                {/* Images Modal */}
-                <div className="modal fade inv-images-modal" id={`modalImages_${car.id}`} tabIndex={-1}>
-                  <div className="modal-dialog modal-lg modal-dialog-centered">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h5 className="modal-title">{car.name} — Images</h5>
-                        <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                      </div>
-                      <div className="modal-body p-0">
-                        <div id={`carousel_${car.id}`} className="carousel slide" data-bs-ride="carousel">
-                          <div className="carousel-inner">
-                            {car.images.map((img, i) => (
-                              <div key={i} className={`carousel-item${i === 0 ? ' active' : ''}`}>
-                                <img src={img} className="d-block w-100" alt={car.name} />
-                              </div>
-                            ))}
-                          </div>
-                          <button className="carousel-control-prev" type="button" data-bs-target={`#carousel_${car.id}`} data-bs-slide="prev">
-                            <span className="carousel-control-prev-icon"></span>
-                          </button>
-                          <button className="carousel-control-next" type="button" data-bs-target={`#carousel_${car.id}`} data-bs-slide="next">
-                            <span className="carousel-control-next-icon"></span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Details Modal */}
-                <div className="modal fade" id={`modalDetails_${car.id}`} tabIndex={-1}>
-                  <div className="modal-dialog modal-lg modal-dialog-centered">
-                    <div className="modal-content inv-detail-modal">
-                      <div
-                        className="inv-detail-modal__header"
-                        style={{ backgroundImage: `url(${car.mainImage})` }}
-                      >
-                        <div className="inv-detail-modal__header-overlay"></div>
-                        <div className="inv-detail-modal__header-content">
-                          <div className="inv-detail-modal__badges">
-                            <span className={`inv-badge ${car.status === 'new' ? 'inv-badge--new' : 'inv-badge--sold'}`}>
-                              {car.status === 'new' ? 'AVAILABLE' : 'SOLD'}
-                            </span>
-                            <span className="inv-badge inv-badge--brand">{car.brand}</span>
-                            <span className="inv-badge inv-badge--year">{car.modelYear}</span>
-                          </div>
-                          <h4 className="inv-detail-modal__car-name">{car.name}</h4>
-                        </div>
-                      </div>
-                      <div className="modal-body inv-detail-modal__body">
-                        <div className="row g-4">
-                          <div className="col-md-6">
-                            <h6 className="inv-detail-modal__section-title">
-                              <i className="fa fa-list-ul me-2"></i>Specifications
-                            </h6>
-                            <ul className="inv-spec-list">
-                              {car.specs.map((s, i) => <li key={i}>{s}</li>)}
-                            </ul>
-                          </div>
-                          <div className="col-md-6">
-                            <h6 className="inv-detail-modal__section-title">
-                              <i className="fa fa-star me-2"></i>Features
-                            </h6>
-                            <div className="inv-feature-grid">
-                              {car.features.map((f, i) => (
-                                <span key={i} className="inv-feature-pill">{f}</span>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="inv-detail-modal__footer">
-                        <button className="inv-footer-btn inv-footer-btn--close" data-bs-dismiss="modal">Close</button>
-                        <a className="inv-footer-btn inv-footer-btn--cta" href="tel:+923341111167">
-                          <i className="fa fa-phone me-2"></i>Enquire Now
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             ))}
           </div>
@@ -319,6 +248,72 @@ export default function Inventory() {
           )}
         </div>
       </section>
+
+      {/* ── React Gallery Modal ── */}
+      {galleryCar && (
+        <div className="inv-react-overlay" onClick={closeGallery}>
+          <div className="inv-react-modal inv-react-modal--gallery" onClick={e => e.stopPropagation()}>
+            <div className="inv-react-modal__header">
+              <span>{galleryCar.name} — Gallery ({gallerySlide + 1}/{galleryCar.images.length})</span>
+              <button className="inv-react-modal__close" onClick={closeGallery}>✕</button>
+            </div>
+            <div className="inv-react-modal__body inv-react-modal__body--gallery">
+              <img src={galleryCar.images[gallerySlide]} alt={galleryCar.name} className="inv-gallery-img" />
+              <button className="inv-gallery-prev" onClick={() => setGallerySlide(s => (s - 1 + galleryCar.images.length) % galleryCar.images.length)}>&#8249;</button>
+              <button className="inv-gallery-next" onClick={() => setGallerySlide(s => (s + 1) % galleryCar.images.length)}>&#8250;</button>
+            </div>
+            <div className="inv-gallery-thumbs">
+              {galleryCar.images.map((img, i) => (
+                <img key={i} src={img} alt="" className={`inv-gallery-thumb${i === gallerySlide ? ' active' : ''}`} onClick={() => setGallerySlide(i)} />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── React Details Modal ── */}
+      {detailCar && (
+        <div className="inv-react-overlay" onClick={closeDetail}>
+          <div className="inv-react-modal inv-react-modal--details" onClick={e => e.stopPropagation()}>
+            <div className="inv-detail-modal__header" style={{ backgroundImage: `url(${detailCar.mainImage})` }}>
+              <div className="inv-detail-modal__header-overlay"></div>
+              <div className="inv-detail-modal__header-content">
+                <div className="inv-detail-modal__badges">
+                  <span className={`inv-badge ${detailCar.status === 'new' ? 'inv-badge--new' : 'inv-badge--sold'}`}>
+                    {detailCar.status === 'new' ? 'AVAILABLE' : 'SOLD'}
+                  </span>
+                  <span className="inv-badge inv-badge--brand">{detailCar.brand}</span>
+                  <span className="inv-badge inv-badge--year">{detailCar.modelYear}</span>
+                </div>
+                <h4 className="inv-detail-modal__car-name">{detailCar.name}</h4>
+              </div>
+              <button className="inv-react-modal__close inv-react-modal__close--abs" onClick={closeDetail}>✕</button>
+            </div>
+            <div className="inv-detail-modal__body" style={{ overflowY: 'auto', maxHeight: '55vh' }}>
+              <div className="row g-4">
+                <div className="col-md-6">
+                  <h6 className="inv-detail-modal__section-title"><i className="fa fa-list-ul me-2"></i>Specifications</h6>
+                  <ul className="inv-spec-list">
+                    {detailCar.specs.map((s, i) => <li key={i}>{s}</li>)}
+                  </ul>
+                </div>
+                <div className="col-md-6">
+                  <h6 className="inv-detail-modal__section-title"><i className="fa fa-star me-2"></i>Features</h6>
+                  <div className="inv-feature-grid">
+                    {detailCar.features.map((f, i) => <span key={i} className="inv-feature-pill">{f}</span>)}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="inv-detail-modal__footer">
+              <button className="inv-footer-btn inv-footer-btn--close" onClick={closeDetail}>Close</button>
+              <a className="inv-footer-btn inv-footer-btn--cta" href="tel:+923341111167">
+                <i className="fa fa-phone me-2"></i>Enquire Now
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
