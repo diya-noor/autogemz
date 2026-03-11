@@ -93,7 +93,6 @@ export default function Contact() {
               </div>
             </div>
           </div>
-          <div className="spacer-double"></div>
         </div>
       </section>
     </div>
