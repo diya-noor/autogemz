@@ -203,8 +203,8 @@ export default function Inventory() {
               <div key={car.id} className="col-lg-3 col-md-4 col-sm-6">
                 <div className="inv-card">
                   <div className="inv-card__img-wrap">
-                    {car.status === 'new' && <div className="inv-card__badge inv-card__badge--new"><span>NEW</span></div>}
-                    {car.status === 'sold' && <div className="inv-card__badge inv-card__badge--sold"><span>SOLD</span></div>}
+                    {car.status === 'new' && <div className="inv-card__badge inv-card__badge--new">NEW</div>}
+                    {car.status === 'sold' && <div className="inv-card__badge inv-card__badge--sold">SOLD</div>}
                     <a className="inv-card__img-link" onClick={() => openGallery(car.id)} style={{ cursor: 'pointer' }}>
                       <img src={car.mainImage} alt={car.name} className="inv-card__img inv-card__img--main" />
                       <img src={car.hoverImage} alt={car.name} className="inv-card__img inv-card__img--hover" />
