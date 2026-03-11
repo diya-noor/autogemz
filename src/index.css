@@ -19,9 +19,14 @@ body {
 }
 
 /* Remove gap below last section on every page */
-#content section:last-child,
-#content section:last-child .container,
-#content section:last-child .row:last-child {
+#content section:last-of-type {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Also zero out the very last section's container rows */
+#content section:last-of-type .container,
+#content section:last-of-type .row:last-child {
   padding-bottom: 0 !important;
   margin-bottom: 0 !important;
 }

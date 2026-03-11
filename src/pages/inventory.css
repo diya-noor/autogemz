@@ -121,26 +121,36 @@
 }
 
 /* ============================================
-   CARD BADGE — diagonal corner ribbon (top-left)
+   CARD BADGE — corner ribbon, equally touches both edges
    ============================================ */
 .inv-card__badge {
   position: absolute;
-  top: 22px;
-  left: -26px;
+  top: 0;
+  left: 0;
   z-index: 5;
+  width: 72px;
+  height: 72px;
+  overflow: hidden;
+  pointer-events: none;
+}
+.inv-card__badge span {
+  position: absolute;
+  display: block;
   width: 100px;
-  text-align: center;
+  padding: 6px 0;
   font-size: 9px;
   font-weight: 800;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  padding: 5px 0;
+  text-align: center;
+  color: #fff;
   transform: rotate(-45deg);
-  pointer-events: none;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  left: -14px;
+  top: 16px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.35);
 }
-.inv-card__badge--new  { background: #22c55e; color: #fff; }
-.inv-card__badge--sold { background: #6b7280; color: #fff; }
+.inv-card__badge--new span  { background: #22c55e; }
+.inv-card__badge--sold span { background: #6b7280; }
 
 /* ============================================
    REACT MODALS (no Bootstrap JS needed)
