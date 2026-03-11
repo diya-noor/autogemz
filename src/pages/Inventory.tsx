@@ -209,7 +209,7 @@ export default function Inventory() {
                       <img src={car.mainImage} alt={car.name} className="inv-card__img inv-card__img--main" />
                       <img src={car.hoverImage} alt={car.name} className="inv-card__img inv-card__img--hover" />
                     </a>
-                    <div className="inv-card__overlay">
+                    <div className="inv-card__overlay" onClick={() => openGallery(car.id)} style={{ cursor: 'pointer' }}>
                       <i className="fa fa-images"></i>
                       <span>View Gallery</span>
                     </div>

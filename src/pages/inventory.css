@@ -145,8 +145,8 @@
   text-align: center;
   color: #fff;
   transform: rotate(-45deg);
-  left: -14px;
-  top: 16px;
+  left: -30px;
+  top: 10px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.35);
 }
 .inv-card__badge--new span  { background: #22c55e; }
