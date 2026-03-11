@@ -69,9 +69,9 @@ export default function BlogPost() {
                 {otherPosts.map(p => (
                   <div key={p.slug} className="d-flex gap-3 mb-3 pb-3" style={{ borderBottom: '1px solid rgba(255,255,255,.1)' }}>
                     <img src={`/${p.image}`} alt={p.title} className="rounded-1 flex-shrink-0" style={{ width: '70px', height: '60px', objectFit: 'cover' }} />
-                    <div>
+                    <div style={{ minWidth: 0, overflow: 'hidden' }}>
                       <span className="p-tagline d-block mb-1" style={{ fontSize: '11px' }}>{p.category}</span>
-                      <Link to={`/blog/${p.slug}`} style={{ fontSize: '13px', lineHeight: '1.4' }}>{p.title}</Link>
+                      <Link to={`/blog/${p.slug}`} style={{ fontSize: '13px', lineHeight: '1.4', display: 'block', wordBreak: 'break-word' }}>{p.title}</Link>
                     </div>
                   </div>
                 ))}

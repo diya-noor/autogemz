@@ -40,6 +40,15 @@ const cars: Car[] = [
 
 const PAGE_SIZE = 10;
 
+function openModal(id: string) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const bs = (window as any).bootstrap;
+  if (bs) {
+    bs.Modal.getOrCreateInstance(el).show();
+  }
+}
+
 export default function Inventory() {
   usePluginInit();
 
@@ -187,7 +196,7 @@ export default function Inventory() {
                   <div className="inv-card__img-wrap">
                     {car.status === 'new' && <div className="inv-card__badge inv-card__badge--new">NEW</div>}
                     {car.status === 'sold' && <div className="inv-card__badge inv-card__badge--sold">SOLD</div>}
-                    <a className="inv-card__img-link" data-bs-toggle="modal" data-bs-target={`#modalImages_${car.id}`} style={{ cursor: 'pointer' }}>
+                    <a className="inv-card__img-link" onClick={() => openModal(`modalImages_${car.id}`)} style={{ cursor: 'pointer' }}>
                       <img src={car.mainImage} alt={car.name} className="inv-card__img inv-card__img--main" />
                       <img src={car.hoverImage} alt={car.name} className="inv-card__img inv-card__img--hover" />
                     </a>
@@ -207,10 +216,10 @@ export default function Inventory() {
                       {car.specs.slice(0, 3).map((s, i) => <li key={i}>{s}</li>)}
                     </ul>
                     <div className="inv-card__actions">
-                      <button className="inv-btn inv-btn--photos" data-bs-toggle="modal" data-bs-target={`#modalImages_${car.id}`}>
+                      <button className="inv-btn inv-btn--photos" onClick={() => openModal(`modalImages_${car.id}`)}>
                         <i className="fa fa-camera me-1"></i> Photos
                       </button>
-                      <button className="inv-btn inv-btn--details" data-bs-toggle="modal" data-bs-target={`#modalDetails_${car.id}`}>
+                      <button className="inv-btn inv-btn--details" onClick={() => openModal(`modalDetails_${car.id}`)}>
                         <i className="fa fa-info-circle me-1"></i> Details
                       </button>
                     </div>
