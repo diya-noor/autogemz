@@ -151,26 +151,28 @@ export default function Inventory() {
         </div>
       </section>
 
-      {/* Section Banner — shown when a specific tab is active */}
+      {/* Section Banner — ribbon bar when filter is active */}
       {(activeTab === 'new' || activeTab === 'old') && (
-        <section style={{ padding: '0 0 0' }}>
+        <section style={{ padding: '0' }}>
           <div className="container">
-            <div className="inv-section-banner">
-              {activeTab === 'new' && (
-                <>
-                  <span className="inv-section-badge inv-section-badge--new">AVAILABLE</span>
-                  <h3 className="inv-section-title">New &amp; Available Cars</h3>
-                  <p className="inv-section-sub">Browse our latest lineup of premium vehicles ready for you.</p>
-                </>
-              )}
-              {activeTab === 'old' && (
-                <>
-                  <span className="inv-section-badge inv-section-badge--sold">SOLD</span>
-                  <h3 className="inv-section-title">Sold Cars</h3>
-                  <p className="inv-section-sub">A look at our previously sold vehicles — a testament to quality.</p>
-                </>
-              )}
-            </div>
+            {activeTab === 'new' && (
+              <div className="inv-section-banner inv-section-banner--new">
+                <span className="inv-section-ribbon inv-section-ribbon--new">NEW</span>
+                <div>
+                  <p className="inv-section-banner-text">New &amp; Available Cars</p>
+                  <p className="inv-section-banner-sub">Latest premium vehicles ready for you</p>
+                </div>
+              </div>
+            )}
+            {activeTab === 'old' && (
+              <div className="inv-section-banner inv-section-banner--sold">
+                <span className="inv-section-ribbon inv-section-ribbon--sold">SOLD</span>
+                <div>
+                  <p className="inv-section-banner-text">Sold Cars</p>
+                  <p className="inv-section-banner-sub">Previously sold vehicles</p>
+                </div>
+              </div>
+            )}
           </div>
         </section>
       )}

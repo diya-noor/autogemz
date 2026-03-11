@@ -84,51 +84,60 @@
 }
 
 /* ============================================
-   SECTION BANNER (New / Sold)
+   SECTION BANNER (New / Sold) — ribbon-style bar
    ============================================ */
 .inv-section-banner {
-  padding: 28px 0 10px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: 8px;
+  margin: 16px 0 8px;
 }
-.inv-section-badge {
+.inv-section-banner--new  { background: rgba(34,197,94,0.08); border-left: 4px solid #22c55e; }
+.inv-section-banner--sold { background: rgba(255,255,255,0.04); border-left: 4px solid #6b7280; }
+.inv-section-ribbon {
   display: inline-block;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 2px;
   text-transform: uppercase;
-  padding: 4px 14px;
-  border-radius: 20px;
-  margin-bottom: 10px;
+  padding: 5px 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
 }
-.inv-section-badge--new  { background: #22c55e22; border: 1px solid #22c55e88; color: #22c55e; }
-.inv-section-badge--sold { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.5); }
-.inv-section-title {
-  font-size: 26px;
-  font-weight: 700;
+.inv-section-ribbon--new  { background: #22c55e; color: #fff; }
+.inv-section-ribbon--sold { background: #6b7280; color: #fff; }
+.inv-section-banner-text {
+  font-size: 15px;
+  font-weight: 600;
   color: #fff;
-  margin: 0 0 6px;
-}
-.inv-section-sub {
-  font-size: 14px;
-  color: rgba(255,255,255,0.45);
   margin: 0;
+}
+.inv-section-banner-sub {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  margin: 2px 0 0;
 }
 
 /* ============================================
-   CARD BADGE (NEW / SOLD ribbon)
+   CARD BADGE — diagonal corner ribbon
    ============================================ */
 .inv-card__badge {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  top: 18px;
+  right: -28px;
   z-index: 5;
+  width: 110px;
+  text-align: center;
   font-size: 10px;
   font-weight: 800;
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  padding: 4px 12px;
-  border-radius: 4px;
+  padding: 5px 0;
+  transform: rotate(45deg);
+  transform-origin: center;
+  pointer-events: none;
 }
 .inv-card__badge--new  { background: #22c55e; color: #fff; }
 .inv-card__badge--sold { background: #6b7280; color: #fff; }
