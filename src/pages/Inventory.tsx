@@ -151,6 +151,30 @@ export default function Inventory() {
         </div>
       </section>
 
+      {/* Section Banner — shown when a specific tab is active */}
+      {(activeTab === 'new' || activeTab === 'old') && (
+        <section style={{ padding: '0 0 0' }}>
+          <div className="container">
+            <div className="inv-section-banner">
+              {activeTab === 'new' && (
+                <>
+                  <span className="inv-section-badge inv-section-badge--new">AVAILABLE</span>
+                  <h3 className="inv-section-title">New &amp; Available Cars</h3>
+                  <p className="inv-section-sub">Browse our latest lineup of premium vehicles ready for you.</p>
+                </>
+              )}
+              {activeTab === 'old' && (
+                <>
+                  <span className="inv-section-badge inv-section-badge--sold">SOLD</span>
+                  <h3 className="inv-section-title">Sold Cars</h3>
+                  <p className="inv-section-sub">A look at our previously sold vehicles — a testament to quality.</p>
+                </>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Cars Grid */}
       <section>
         <div className="container">
@@ -158,10 +182,9 @@ export default function Inventory() {
             {visibleCars.map(car => (
               <div key={car.id} className="col-lg-3 col-md-4 col-sm-6">
                 <div className="inv-card">
-                  {car.status === 'new' && <div className="inv-card__badge inv-card__badge--new">NEW</div>}
-                  {car.status === 'sold' && <div className="inv-card__badge inv-card__badge--sold">SOLD</div>}
-
                   <div className="inv-card__img-wrap">
+                    {car.status === 'new' && <div className="inv-card__badge inv-card__badge--new">NEW</div>}
+                    {car.status === 'sold' && <div className="inv-card__badge inv-card__badge--sold">SOLD</div>}
                     <a className="inv-card__img-link" data-bs-toggle="modal" data-bs-target={`#modalImages_${car.id}`} style={{ cursor: 'pointer' }}>
                       <img src={car.mainImage} alt={car.name} className="inv-card__img inv-card__img--main" />
                       <img src={car.hoverImage} alt={car.name} className="inv-card__img inv-card__img--hover" />
